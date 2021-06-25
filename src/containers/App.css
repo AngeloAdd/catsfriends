@@ -1,0 +1,26 @@
+.header-style-custom{
+    background-color: #39375B;
+}
+
+.heading-style-custom{
+    font-family: 'Cat Font';
+    color: var(--main-color);
+}
+
+.card-style-custom{
+    background-color: var(--main-color);
+}
+
+.input-style-custom{
+    background-color: var(--main-color);
+    color: slateblue;
+    border: 0;
+}
+.input-style-custom:focus{
+    outline: 0;
+    box-shadow: 0 0 0 2px var(--main-color), inset 0 0 0 1px var(--main-color);
+}
+
+.error-font{
+    font-family: 'Cat Font';
+}
