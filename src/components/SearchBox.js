@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-const SearchBox = ({searchfield, searchChange}) => {
+const SearchBox = ({searchChange}) => {
     return (
         <input
             className="input-style-custom br3 pa2 input-reset shadow-2"
@@ -11,4 +11,4 @@ const SearchBox = ({searchfield, searchChange}) => {
     )
 }
 
-export default SearchBox;
+export default SearchBox

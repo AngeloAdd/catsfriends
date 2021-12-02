@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
 class ErrorBoundry extends Component{
     constructor(props){
-        super(props);
+        super(props)
         this.state = {
             hasError: false
         }
@@ -16,9 +16,9 @@ class ErrorBoundry extends Component{
         if(this.state.hasError){
             return <h1 className="error-font tc">Ooooooops! Something Went Wrong</h1>
         } else{
-            return this.props.children;
+            return this.props.children
         }
     }
 }
 
-export default ErrorBoundry;
+export default ErrorBoundry

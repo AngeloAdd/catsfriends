@@ -1,5 +1,5 @@
-import React from 'react';
-import Card from './Card';
+import React from 'react'
+import Card from './Card'
 
 const CardList = ( {cats} ) => {
     return (
@@ -11,10 +11,10 @@ const CardList = ( {cats} ) => {
                     name={catsItem.name}
                     email={catsItem.email}
                 />
-                })
+            })
             }
         </section>
-    );
+    )
 }
 
-export default CardList;
+export default CardList
