@@ -1,46 +1,42 @@
-import React from 'react';
-import CardList from '../components/CardList';
-import Header from '../components/Header';
-import Scroll from '../components/Scroll';
+import React, { useState, useEffect } from 'react'
+import CardList from '../components/CardList'
+import Header from '../components/Header'
+import Scroll from '../components/Scroll'
 import './App.css'
-import ErrorBoundry  from '../components/ErrorBoundry';
+import ErrorBoundry  from '../components/ErrorBoundry'
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      cats: [],
-      searchfield: ''
-    }
-  }
+const App = () => {
+  
+    const [ cats, setCats ] = useState([])
+    const [ searchfield, setSearchfield ] = useState('')
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response => response.json())
-    .then(users => {
-      return this.setState({ cats: users })
-  })
-  }
-
-  onSearchChange = (event) => {
-    return this.setState( {searchfield: event.target.value} );
-  }
-
-  render() {
-    const filteredCats = this.state.cats.filter( cat => {
-      return cat.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+    useEffect(()  => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(users => {
+            return setCats(users)
+        })
+        .catch(e => console.log(e))
     })
-    return !this.state.cats.length
-      ? <h1 className="heading-style-custom tc">Loading</h1>
-      : (<React.Fragment>
-          <Header searchChange={this.onSearchChange} />
-          <Scroll>
-            <ErrorBoundry>
-              <CardList cats={ filteredCats } />
-            </ErrorBoundry>
-          </Scroll>
-        </React.Fragment>);
-    }
-  }
 
-export default App;
+    const onSearchChange = (event) => setSearchfield(event.target.value)
+
+    const filteredCats = cats.filter( cat => {
+        return cat.name.toLowerCase().includes(searchfield.toLowerCase())
+    })
+
+    return (
+        (!cats.length) ?
+            <h1 className="heading-style-custom tc">Loading</h1> :
+            (<React.Fragment>
+                <Header searchChange={onSearchChange} />
+                <Scroll>
+                    <ErrorBoundry>
+                        <CardList cats={ filteredCats } />
+                    </ErrorBoundry>
+                </Scroll>
+            </React.Fragment>)
+    )
+}
+
+export default App
