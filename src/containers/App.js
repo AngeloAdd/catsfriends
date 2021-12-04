@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import CardList from '../components/CardList'
 import Header from '../components/Header'
 import Scroll from '../components/Scroll'
 import './App.css'
 import ErrorBoundry  from '../components/ErrorBoundry'
+import { setSearchField } from '../actions/actions'
 
-const App = () => {
-  
+const mapStateToProps = state => {
+    return {
+        searchField: state.searchField
+    }
+}
+
+const mapDispatchToProps = disptch => {
+    return {
+        onSearchChange: (event) => disptch(setSearchField(event.target.value)),
+    }
+}
+
+
+const App = (AppProps) => {
     const [ cats, setCats ] = useState([])
-    const [ searchfield, setSearchfield ] = useState('')
 
+    const { searchField, onSearchChange} = AppProps
+    
     useEffect(()  => {
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(response => response.json())
@@ -19,24 +34,24 @@ const App = () => {
         .catch(e => console.log(e))
     })
 
-    const onSearchChange = (event) => setSearchfield(event.target.value)
-
     const filteredCats = cats.filter( cat => {
-        return cat.name.toLowerCase().includes(searchfield.toLowerCase())
+        return cat.name.toLowerCase().includes(searchField.toLowerCase())
     })
 
     return (
         (!cats.length) ?
             <h1 className="heading-style-custom tc">Loading</h1> :
-            (<React.Fragment>
-                <Header searchChange={onSearchChange} />
-                <Scroll>
-                    <ErrorBoundry>
-                        <CardList cats={ filteredCats } />
-                    </ErrorBoundry>
-                </Scroll>
-            </React.Fragment>)
+            (
+                <>
+                    <Header onSearchChange={onSearchChange} />
+                    <Scroll>
+                        <ErrorBoundry>
+                            <CardList cats={ filteredCats } />
+                        </ErrorBoundry>
+                    </Scroll>
+                </>
+            )
     )
 }
 
-export default App
+export default connect(mapStateToProps, mapDispatchToProps)(App)
